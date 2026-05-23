@@ -3,167 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>aldsShop</title>
-    <style>
-        body { margin: 0; font-family: sans-serif; }
-        
-        /* Video Background */
-        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; }
-        /* Make the whole content area fully transparent so you can see the video */
-.content { 
-    position: relative; 
-    z-index: 1; 
-    background: transparent; 
-    min-height: 100vh; 
-    padding-bottom: 20px; 
-}
+   <style>
+   
+    /* Reset everything to a clean, modern look */
+    body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        color: #333; 
+        margin: 0; 
+    }
 
-/* Make your cards semi-transparent (glassmorphism effect) */
-.card { 
-    background: rgba(255, 255, 255, 0.7); /* 0.7 allows the video to show through */
-    backdrop-filter: blur(5px); /* Adds a cool frosted glass effect */
-    border-radius: 5px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
-    padding: 5px; 
-}
+    /* Force your buttons to look professional again */
+    button, .cart-btn, .chat-btn { 
+        font-family: inherit; 
+        cursor: pointer; 
+        border: none; 
+    }
 
-/* Also make your Banners semi-transparent */
-.banner { 
-    background: rgba(255, 255, 255, 0.8) !important; 
-    backdrop-filter: blur(5px);
-}
-        /* Header */
-        /* Replace your old .header style with this */
-/* Updated Header Styles */
-.header { 
-    background: rgba(255, 255, 255, 0.2); 
-    backdrop-filter: blur(10px);
-    padding: 10px; 
-    display: flex; 
-    align-items: center; 
-    flex-wrap: nowrap; /* CRITICAL: This keeps everything on one line */
-    gap: 10px; 
-    height: 60px; 
-    position: sticky; 
-    top: 0; 
-    z-index: 1000;
-    width: 100%; /* Ensure it spans the full screen */
-    box-sizing: border-box; /* Prevents padding from breaking the width */
-}
+    /* 1. Background Video */
+    #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; }
+    
+    .content-wrapper { position: relative; z-index: 1; min-height: 100vh; padding-bottom: 20px; }
 
-.search-bar { 
-    flex-grow: 1; /* Search bar will take up all available remaining space */
-    min-width: 150px; /* Prevents the search bar from disappearing on small screens */
-    height: 40px; 
-    padding: 0 15px; 
-    border-radius: 20px; 
-    border: none;
-}
+    /* 2. Glass Header */
+    .header { 
+        background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
+        padding: 10px; display: flex; align-items: center; gap: 10px; 
+        position: sticky; top: 0; z-index: 1000;
+    }
+    .shop-title { color: white; font-weight: bold; font-size: 20px; margin-right: 15px; }
+    .search-bar { flex-grow: 1; height: 40px; border-radius: 20px; border: none; padding: 0 15px; background: rgba(255, 255, 255, 0.9); }
+    
+    /* Buttons */
+    .cart-btn, .chat-btn { 
+        padding: 10px 20px; border-radius: 20px; text-decoration: none; 
+        font-weight: bold; font-size: 13px; color: white; 
+    }
+    .cart-btn { background: #191a63; }
+    .chat-btn { background: #25D366; }
 
-.header-actions {
-    display: flex;
-    flex-shrink: 0; /* CRITICAL: Prevents buttons from shrinking/stacking */
-    gap: 8px;
-}
+    /* 3. Banner Fix */
+    .banner-container { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+    .banner-img { width: 100%; max-height: 150px; object-fit: cover; border-radius: 8px; }
 
-.cart-btn, .chat-btn { 
-    height: 40px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 15px;
-    border-radius: 20px; 
-    text-decoration: none; 
-    font-weight: bold;
-    font-size: 13px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
+    /* 4. Product Grid Fix (3 Columns) */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 15px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .product-card { 
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        border-radius: 8px; 
+        padding: 10px; 
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    .product-card img { width: 100%; height: 120px; object-fit: contain; }
+    .product-title { font-size: 14px; font-weight: bold; color: #333; display: block; margin: 5px 0; }
+    .add-btn { background: #191a63; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; }
+    
+    .info-row { 
+        display: flex;             /* Activates side-by-side mode */
+        justify-content: space-between; /* Pushes title left, button right */
+        align-items: center;       /* Keeps them vertically centered */
+        margin-bottom: 5px;
+    }
 
-.cart-btn { background: #ee4d2d; color: white; }
-.chat-btn { background: #25D366; color: white; } /* WhatsApp Green */
+    .product-title { 
+        font-weight: bold; 
+        font-size: 14px;
+        white-space: nowrap;       /* Stops the title from wrapping */
+        overflow: hidden;          /* Hides text if it's too long */
+        text-overflow: ellipsis;   /* Adds '...' if text is too long */
+        margin-right: 10px;        /* Adds space so they don't touch */
+    }
 
-.search-bar { 
-    flex: 4; 
-    height: 40px; /* Match height to cart button */
-    padding: 0 15px; 
-    border-radius: 20px; 
-    border: none;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-.cart-btn { 
-    flex: 1;
-    height: 40px; /* Same height as search bar */
-    display: flex;
-    align-items: center; /* Center the text inside the button */
-    justify-content: center;
-    background: #ceee2d; 
-    color: white; 
-    border-radius: 20px; 
-    text-decoration: none; 
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-
-}
-       .icon { color: white; text-shadow: 1px 1px 2px black; }
-
-        /* Banners */
-        .banner-container { 
-    padding: 10px; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-}
-
-.banner-img { 
-    width: 100%; 
-    height: 120px; 
-    object-fit: contain; /* This prevents the image from being cut off */
-    background-color: rgba(255, 255, 255, 0.5); /* Optional: adds a light background if the image is smaller than the box */
-    border-radius: 8px; 
-
-}
-        /* Products */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .card { background: white; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 5px; }
-        .card img { 
-    width: 100%; 
-    height: 180px;      /* Set a slightly taller fixed height */
-    object-fit: contain; /* This shows the ENTIRE image without cropping it */
-    background: #f8f8f8; /* Adds a light background color to fill empty space */
-    border-radius: 4px; 
-    padding: 5px;        /* Adds a little breathing room */
-}
-        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 5px; }
-        .add-btn { background: #b7ee2d; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; }
-  .chat-btn { 
-    background: #25D366; /* WhatsApp Green */
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-}
-.shop-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(255, 255, 255);
-    margin-right: 15px; /* Adds space between the title and the search bar */
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 1px;
-    white-space: nowrap; /* Keeps "aldsMart" on one line */
-}
-
-/* Adjust the search bar so it doesn't get squished */
-.search-bar {
-    flex-grow: 1;
-    height: 40px;
-    padding: 0 15px;
-    border-radius: 20px;
-    border: none;
-    min-width: 100px; /* Ensures search bar stays usable */
-}
-  </style>
+    .add-btn { 
+        flex-shrink: 0;            /* Ensures the button stays small */
+    }
+</style>
 </head>
 <body>
     <video autoplay muted loop id="bg-video">
@@ -180,77 +102,78 @@
     </div>
 </div>
 
+
         <div class="banner-container">
     <img src="mystery.webp" class="banner-img" alt="Voucher">
     <img src="super.jpg" class="banner-img" alt="Super Brand Day">
 </div>
 
-        <div class="grid" id="productGrid">
+        <div class="product-grid" id="productGrid">
             
-            <div class="card">
+            <div class="product-card">
                 <img src="gholdengo.png" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">Gholdengo ex 220/187 SAR></span>
                     <button class="add-btn" onclick="addToCart('Gholdengo ex 220/187 SAR', 300000)">+</button>
                 </div>
-                <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp300.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp300.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
 
-            <div class="card">
+            <div class="product-card">
                 <img src="mew.jpg" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">Shiny Mew ENG ex 216/091</span>
                     <button class="add-btn" onclick="addToCart('Shiny Mew ENG ex 216/091', 770000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp770.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp770.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
-<div class="card">
+<div class="product-card">
                 <img src="eevee.jpg" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">Eevee V ENG 108/159</span>
                     <button class="add-btn" onclick="addToCart('Shiny Mew ENG ex 216/091', 210000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp210.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp210.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
-<div class="card">
+<div class="product-card">
                 <img src="zamazenta.jpeg" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">Zamazenta INDO V 232/172</span>
                     <button class="add-btn" onclick="addToCart('Zamazenta INDO V 232/172', 550000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp550.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp550.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
 
-            <div class="card">
+            <div class="product-card">
                 <img src="victini.jpg" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">Victini V ENG 144/163 (Slightly Damaged)</span>
                     <button class="add-btn" onclick="addToCart('Victini V ENG 144/163', 250000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp250.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp250.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
-            <div class="card">
+            <div class="product-card">
                 <img src="mystery.webp" alt="Product Image">
                 <div class="info-row">
                     <span class="product-title">MYSTERY BULK!!! (Guaranteed HIT)</span>
                     <button class="add-btn" onclick="addToCart(',MYSTERY BULK!!!', 25000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp25.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:12</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp25.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:12</div>
             </div>
-            <div class="card">
-                <img src="lucario.jpg" alt="Product Image">
+            <div class="product-card">
+            <img src="lucario.jpg" alt="Product Image"> 
                 <div class="info-row">
                     <span class="product-title">Lucario & Melmetal GX JPN 058/054</span>
                     <button class="add-btn" onclick="addToCart('Lucario & Melmetal GX JPN 058/054', 670000)">+</button>
                 </div>
-                <div style="color: #b7ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Rp670.000</div>
-                 <div style="color: #d4ee2d; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
+                <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Rp670.000</div>
+                 <div style="color: #191a63; font-weight: bold; padding: 0 5px 10px 5px;">Stock:1</div>
             </div>
         </div>
     </div>
@@ -266,14 +189,13 @@
             alert(name + " ditambahkan ke keranjang!");
         }
 
-        function searchProducts() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].querySelector('.product-title').innerText.toLowerCase();
-                cards[i].style.display = title.includes(input) ? "" : "none";
-            }
-        }
-        
+      function searchProducts() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let cards = document.getElementsByClassName('product-card'); // This now points to your grid cards
+    for (let i = 0; i < cards.length; i++) {
+        let title = cards[i].querySelector('.product-title').innerText.toLowerCase();
+        cards[i].style.display = title.includes(input) ? "" : "none";
+    }
+}
     </script>
 </body>
