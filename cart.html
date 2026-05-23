@@ -82,7 +82,7 @@
                 <h3>Total: Rp${total.toLocaleString()}</h3>
                 <textarea id="buyerNote" placeholder="Tulis alamat atau catatan di sini..."></textarea>
                 <button class="checkout-btn" onclick="checkout(${total})">Checkout via WhatsApp</button>
-                <a href="code2.html" class="back-btn">Kembali ke Toko</a>
+                <a href="index.html" class="back-btn">Kembali ke Toko</a>
             `;
         }
     }
@@ -101,7 +101,7 @@
         cart.forEach(item => message += `- ${item.name}%0A`);
         message += "%0A*Total: Rp" + total.toLocaleString() + "*";
         message += "%0A%0A*Catatan:* " + note;
-        window.open("https://wa.me/6281234567890?text=" + message, "_blank");
+        window.open("https://wa.me/6281779997989?text=" + message, "_blank");
     }
 
     loadCart();
